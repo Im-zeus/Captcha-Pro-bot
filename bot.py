@@ -14,8 +14,8 @@ from helper.markup import MakeCaptchaMarkup
 app = Client(Config.SESSION_NAME, api_id=Config.APP_ID, api_hash=Config.API_HASH, bot_token=Config.BOT_TOKEN)
 # Local database for saving user info
 LocalDB = {}
-ch_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text="Updates Channel", url="https://t.me/Universal_Projects"),
-                                    InlineKeyboardButton(text="Support Group", url="https://t.me/JV_Community")]])
+ch_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text="🍁𝗢𝗪𝗡𝗘𝗥🍁", url="https://t.me/ITzMeZeus"),
+                                    InlineKeyboardButton(text="🍁𝗦𝗨𝗣𝗣𝗢𝗥𝗧🍁", url="https://t.me/NoobiezHub")]])
 BOT_UNAME = Config.BOT_USERNAME
 
 @app.on_chat_member_updated()
@@ -23,7 +23,7 @@ async def check_chat_captcha(client, message):
     user_id = message.from_user.id
     chat_id = message.chat.id
     if Config.API_TOKEN is None:
-        await client.send_message(chat_id, "Please get the apy key from @JV_Community")
+        await client.send_message(chat_id, "Please get the apy key from [NOOBIEZHUB](t.me/NOOBIEZHUB)")
         return
     chat = manage_db().chat_in_db(chat_id)
     if not chat:
@@ -55,7 +55,7 @@ async def check_chat_captcha(client, message):
                 await client.send_message(
                     chat_id=chat_id,
                     text=f"{message.from_user.mention} again joined group without verifying!\n\n"
-                         f"He can try again after 10 minutes.",
+                         f"🧚He can try again after 10 minutes🍁",
                     disable_web_page_preview=True
                 )
                 await client.delete_messages(chat_id=chat_id,
@@ -71,8 +71,8 @@ async def check_chat_captcha(client, message):
     except:
         return
     await client.send_message(chat_id,
-                              text=f"{message.from_user.mention} to chat here please verify that your a human",
-                              reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Verify Now", callback_data=f"verify_{chat_id}_{user_id}")]]))
+                              text=f"{message.from_user.mention} to chat here please verify that your a human🧞‍♂️",
+                              reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="🦄Verify Now🍁", callback_data=f"verify_{chat_id}_{user_id}")]]))
         
 @app.on_message(filters.command(["captcha",f"captcha@{BOT_UNAME}"]) & ~filters.private)
 async def add_chat(bot, message):
@@ -88,8 +88,8 @@ async def add_chat(bot, message):
             await message.reply_text("Captcha already tunned on here, use /remove to turn off")
         else:
             await message.reply_text(text=f"Please select the captcha type",
-                                    reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Number", callback_data=f"new_{chat_id}_{user_id}_N"),
-                                                                        InlineKeyboardButton(text="Emoji", callback_data=f"new_{chat_id}_{user_id}_E")]]))
+                                    reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="🥀Number✨️", callback_data=f"new_{chat_id}_{user_id}_N"),
+                                                                        InlineKeyboardButton(text=🌻Emoji🧚", callback_data=f"new_{chat_id}_{user_id}_E")]]))
         
 @app.on_message(filters.command(["help",f"help@{BOT_UNAME}"]))
 async def start_chat(bot, message):
@@ -121,7 +121,7 @@ async def cb_handler(bot, query):
         user_id = query.data.split("_")[2]
         captcha = query.data.split("_")[3]
         if query.from_user.id != int(user_id):
-            await query.answer("This Message is Not For You!", show_alert=True)
+            await query.answer("🦄This Message is Not For You!😜", show_alert=True)
             return
         if captcha == "N":
             type_ = "Number"
@@ -129,15 +129,15 @@ async def cb_handler(bot, query):
             type_ = "Emoji"
         chk = manage_db().add_chat(int(chat_id), captcha)
         if chk == 404:
-            await query.message.edit("Captcha already tunned on here, use /remove to turn off")
+            await query.message.edit("🎃Captcha already tunned on here, use /remove to turn off✨️")
             return
         else:
-            await query.message.edit(f"{type_} Captcha turned on for this chat.")
+            await query.message.edit(f"{type_} Captcha turned on for this chat🎉.")
     elif cb_data.startswith("verify_"):
         chat_id = query.data.split("_")[1]
         user_id = query.data.split("_")[2]
         if query.from_user.id != int(user_id):
-            await query.answer("This Message is Not For You!", show_alert=True)
+            await query.answer("🦄This Message is Not For You!😜", show_alert=True)
             return
         chat = manage_db().chat_in_db(int(chat_id))
         print("proccesing cb data")
@@ -145,8 +145,8 @@ async def cb_handler(bot, query):
             c = chat["captcha"]
             markup = [[],[],[]]
             if c == "N":
-                print("proccesing number captcha")
-                await query.answer("Creating captcha for you")
+                print("✨️proccesing number captcha🥀")
+                await query.answer("💫Creating captcha for you💫")
                 data_ = get(f"https://api.jigarvarma.tk/num_captcha?token={Config.API_TOKEN}").text
                 data_ = json.loads(data_)
                 _numbers = data_["answer"]["answer"]
@@ -221,24 +221,24 @@ async def cb_handler(bot, query):
                 await asyncio.sleep(600)
                 del LocalDB[query.from_user.id]
                 return
-            markup = MakeCaptchaMarkup(query.message["reply_markup"]["inline_keyboard"], _number, "❌")
+            markup = MakeCaptchaMarkup(query.message["reply_markup"]["inline_keyboard"], _number, "💔")
             await query.message.edit_caption(f"{query.from_user.mention}, select all the {typ_}s you see in the picture. "
                                            f"You are allowed only {n} mistakes.",
                                            reply_markup=InlineKeyboardMarkup(markup))
         else:
             LocalDB[query.from_user.id]["answer"].remove(_number)
-            markup = MakeCaptchaMarkup(query.message["reply_markup"]["inline_keyboard"], _number, "✅")
+            markup = MakeCaptchaMarkup(query.message["reply_markup"]["inline_keyboard"], _number, "🤍")
             await query.message.edit_reply_markup(reply_markup=InlineKeyboardMarkup(markup))
             if not LocalDB[query.from_user.id]["answer"]:
-                await query.answer("You Passed🥳 the Captcha!", show_alert=True)
+                await query.answer("🦄You Passed the Captcha!🧚", show_alert=True)
                 del LocalDB[query.from_user.id]
                 await bot.unban_chat_member(chat_id=query.message.chat.id, user_id=query.from_user.id)
                 await query.message.delete(True)
             await query.answer()
     elif cb_data.startswith("done_"):
-        await query.answer("Dont click on same button again", show_alert=True)
+        await query.answer("Dont click on same button again😑", show_alert=True)
     elif cb_data.startswith("wrong_"):
-        await query.answer("Dont click on same button again", show_alert=True)
+        await query.answer("Dont click on same button again😑", show_alert=True)
         
 if __name__ == "__main__":
     app.run()
