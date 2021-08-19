@@ -77,7 +77,7 @@ async def check_chat_captcha(client, message):
 @app.on_message(filters.command(["captcha",f"captcha@{BOT_UNAME}"]) & ~filters.private)
 async def add_chat(bot, message):
     if Config.API_TOKEN is None:
-        await message.reply_text("Please get the apy key from @JV_Community")
+        await message.reply_text("Please get the apy key from @NOOBIEZHUB")
         return
     chat_id = message.chat.id
     user_id = message.from_user.id
