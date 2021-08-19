@@ -89,7 +89,7 @@ async def add_chat(bot, message):
         else:
             await message.reply_text(text=f"Please select the captcha type",
                                     reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="🥀Number✨️", callback_data=f"new_{chat_id}_{user_id}_N"),
-                                                                        InlineKeyboardButton(text=🌻Emoji🧚", callback_data=f"new_{chat_id}_{user_id}_E")]]))
+                                                                        InlineKeyboardButton(text=Emoji🧚", callback_data=f"new_{chat_id}_{user_id}_E")]]))
         
 @app.on_message(filters.command(["help",f"help@{BOT_UNAME}"]))
 async def start_chat(bot, message):
