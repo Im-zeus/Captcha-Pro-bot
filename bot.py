@@ -88,8 +88,8 @@ async def add_chat(bot, message):
             await message.reply_text("Captcha already tunned on here, use /remove to turn off")
         else:
             await message.reply_text(text=f"Please select the captcha type",
-                                    reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="🥀Number✨️", callback_data=f"new_{chat_id}_{user_id}_N"),
-                                                                        InlineKeyboardButton(text=Emoji🧚", callback_data=f"new_{chat_id}_{user_id}_E")]]))
+                                    reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Number", callback_data=f"new_{chat_id}_{user_id}_N"),
+                                                                        InlineKeyboardButton(text=Emoji", callback_data=f"new_{chat_id}_{user_id}_E")]]))
         
 @app.on_message(filters.command(["help",f"help@{BOT_UNAME}"]))
 async def start_chat(bot, message):
